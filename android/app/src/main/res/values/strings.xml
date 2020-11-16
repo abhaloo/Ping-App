@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">locationSharer</string>
+    <string name="facebook_app_id">2701763120089296</string>
+    <string name="fb_login_protocol_scheme">fb2701763120089296</string>
 </resources>
