@@ -10,12 +10,18 @@ import {
       DeviceEventEmitter // for emitting/listening custom events
     } from 'react-native';
 
-var FBLoginButton = require('../../FBLoginButton'); // for implementing Facebook login
+// for interacting with Pusher
+import Pusher from 'pusher-js/react-native'; 
 
-import Pusher from 'pusher-js/react-native'; // for interacting with Pusher
+// for implementing Facebook login
+var FBLoginButton = require('./FBLoginButton'); 
+var { FBLogin } = require('react-native-facebook-login');
 
 
-class HomeScreen extends Component {
+
+
+
+export default class HomeScreen extends Component {
     render () {
     return (
         <View style={styles.container}>
