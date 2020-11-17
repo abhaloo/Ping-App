@@ -21,7 +21,7 @@ var { FBLogin } = require('react-native-facebook-login');
 
 
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
     render () {
     return (
         <View style={styles.container}>
