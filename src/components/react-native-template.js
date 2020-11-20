@@ -1,4 +1,4 @@
-      
+ /*
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -40,3 +40,5 @@
           </View>
         </ScrollView>
       </SafeAreaView>
+      
+  */
