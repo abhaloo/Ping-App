@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingBottom: 30,
-    marginBottom: 80,
+    marginBottom: 40,
     alignSelf: 'center'
   }
 });

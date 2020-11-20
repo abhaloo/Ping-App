@@ -21,16 +21,8 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/components/index';
-//import MapScreen from './src/components/mapPage';
+import MapScreen from './src/components/mapPage';
 
-
-function MapScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Map Screen</Text>
-    </View>
-  );
-}
 
 const Stack = createStackNavigator();
 
