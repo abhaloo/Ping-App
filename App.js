@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -18,31 +17,20 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/components/index';
-//import MapScreen from './src/components/mapPage';
-
-
-function MapScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Map Screen</Text>
-    </View>
-  );
-}
+import MapScreen from './src/components/mapPage';
 
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
     <>
-    <NavigationContainer>
-      <Stack.Navigator>
-      
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Map" component={MapScreen} />
-
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Map" component={MapScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

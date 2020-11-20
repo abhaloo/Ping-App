@@ -18,13 +18,13 @@ import Friends from './Friends'; // component for displaying the user's friends
 import { regionFrom } from './locationHelper'; // helper function for constructing the data needed by React Native Maps
 
 // for implementing Facebook login
-var FBLoginButton = require('./FBLoginButton');
-var {FBLogin} = require('react-native-facebook-login');
+const FBLoginButton = require('./FBLoginButton');
+const {FBLogin} = require('react-native-facebook-login');
 
 class HomeScreen extends Component {
-  
-  
-  // set screen tite
+
+
+  // set screen title
   static navigationOptions = {
     title: 'locationSharer',
   };
@@ -38,19 +38,19 @@ class HomeScreen extends Component {
 
     // bind the functions to the class
     this.onLogin = this.onLogin.bind(this);
-    
+
     this.onLoginFound = this.onLoginFound.bind(this);
-    
+
     this.onLogout = this.onLogout.bind(this);
-    
+
     this.setUser = this.setUser.bind(this);
-     
+
     this.setFriends = this.setFriends.bind(this);
-    
+
     this.toggleLocationSharing = this.toggleLocationSharing.bind(this);
-    
+
     this.onViewLocation = this.onViewLocation.bind(this);
-  
+
 
     this.state = {
       is_loggedin: false, // whether the user is currently logged in or not
@@ -68,25 +68,25 @@ class HomeScreen extends Component {
     this.setFriends(login_data.credentials.token);
   }
 
-  //if an exisiting Facebook session exists, query Facebook using that session
-  async onLoginFound(data) {   
+  //if an existing Facebook session exists, query Facebook using that session
+  async onLoginFound(data) {
     let token = data.credentials.token;
 
     await fetch(`https://graph.facebook.com/me?access_token=${token}`)
       .then((response) => response.json())
       .then((responseJson) => {
-        
-          console.log("Existing login found.");
+
+          console.log('Existing login found.');
           console.log(data);
 
           let login_data = {
             profile: {
               id: responseJson.id,
-              name: responseJson.name
+              name: responseJson.name,
             },
             credentials: {
-              token: token
-            }
+              token: token,
+            },
           };
 
           this.setUser(login_data);
@@ -104,9 +104,9 @@ class HomeScreen extends Component {
   onLogout() {
     this.setState({
       is_loggedin: false,
-      user: null, 
+      user: null,
       friends: null,
-      is_subscribed_to: null
+      is_subscribed_to: null,
     });
   }
 
@@ -120,8 +120,8 @@ class HomeScreen extends Component {
         id: user_id,
         access_token: login_data.credentials.token,
         name: login_data.profile.name,
-        photo: `https://graph.facebook.com/${user_id}/picture?width=100` // the user's profile picture
-      }
+        photo: `https://graph.facebook.com/${user_id}/picture?width=100`, // the user's profile picture
+      },
     });
 
   }
@@ -131,7 +131,7 @@ class HomeScreen extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          friends: responseJson.data
+          friends: responseJson.data,
         });
       })
       .catch((error) => {
@@ -140,7 +140,7 @@ class HomeScreen extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    
+
       //Initialize Pusher instance
       this.pusher = new Pusher('1104307', {
       authEndpoint: 'c063883b80912c971c1d',
@@ -149,11 +149,11 @@ class HomeScreen extends Component {
       auth: {
         params: {
           app_key: 'Bmce+9aHdOoVtE7fS3B07tfj7Bc=', // Unique key (now secret)
-        }
-      }
+        },
+      },
     });
 
-    //used to unsubscribe from a friends channel 
+    //used to unsubscribe from a friends channel
     //triggered once the user leaves the map screen to return to home screen
     DeviceEventEmitter.addListener('unsubscribe', (e) => {
       let friend_id = this.state.subscribed_to;
@@ -169,31 +169,31 @@ class HomeScreen extends Component {
     let is_location_shared = !this.state.is_location_shared;
 
     this.setState({
-      is_location_shared: is_location_shared
+      is_location_shared: is_location_shared,
     });
 
     let user_id = this.state.user.id;
-    
+
     // location sharing disabled
-    if(!is_location_shared){
+    if (!is_location_shared){
       this.pusher.unsubscribe(`private-friend-${user_id}`); // disconnect from their own channel
-      if(this.watchId){
-        navigator.geolocation.clearWatch(this.watchId); //stop sharing 
+      if (this.watchId){
+        navigator.geolocation.clearWatch(this.watchId); //stop sharing
       }
-    }else{
+    } else {
       //location sharing enabled
       this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
       this.user_channel.bind('client-friend-subscribed', (friend_data) => {
 
         let friends_count = this.state.subscribed_friends_count + 1;
         this.setState({
-          subscribed_friends_count: friends_count
+          subscribed_friends_count: friends_count,
         });
 
-        if(friends_count == 1){ // only begin monitoring the location when the first subscriber subscribes
+        if (friends_count == 1){ // only begin monitoring the location when the first subscriber subscribes
           this.watchId = navigator.geolocation.watchPosition(
             (position) => {
-              var region = regionFrom(
+              let region = regionFrom(
                 position.coords.latitude,
                 position.coords.longitude,
                 position.coords.accuracy
@@ -202,7 +202,7 @@ class HomeScreen extends Component {
             }
           );
         }
-      });  
+      });
 
     }
   }
@@ -214,12 +214,12 @@ class HomeScreen extends Component {
     this.friend_channel.bind('pusher:subscription_succeeded', () => {
       let username = this.state.user.name;
       this.friend_channel.trigger('client-friend-subscribed', {
-        name: username
+        name: username,
       });
     });
 
     this.setState({
-      subscribed_to: friend.id
+      subscribed_to: friend.id,
     });
 
     //navigating to the map page
@@ -227,7 +227,7 @@ class HomeScreen extends Component {
     const { navigate } = this.props.navigation;
     navigate('MapScreen', {
     name: friend.name,
-    friend_channel: this.friend_channel // pass the reference to the friend's channel
+    friend_channel: this.friend_channel, // pass the reference to the friend's channel
     });
   }
 
@@ -265,7 +265,7 @@ class HomeScreen extends Component {
         }
 
           <FBLogin
-            permissions={["email", "user_friends"]}
+            permissions={['email', 'user_friends']}
             onLogin={this.onLogin}
             onLoginFound={this.onLoginFound}
             onLogout={this.onLogout}
@@ -282,22 +282,22 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   page_container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   container: {
     flex: 1,
-    padding: 20
+    padding: 20,
   },
   profile_container: {
     flex: 1,
     alignItems: 'center',
-    marginBottom: 50
+    marginBottom: 50,
   },
   button: {
     paddingBottom: 30,
     marginBottom: 80,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 export default HomeScreen;
