@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 
-class Map extends Component<{}> {
+class Map extends Component {
   render() {
     return (
       <View style={styles.map_container}>
