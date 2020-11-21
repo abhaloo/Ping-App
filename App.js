@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 
 import React from 'react';
 import {
@@ -32,8 +33,8 @@ const App: () => React$Node = () => {
     <NavigationContainer>
       <Stack.Navigator>
       
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Map" component={MapScreen} />
+      {<Stack.Screen name="Home" component={HomeScreen} />}
+       <Stack.Screen name="Map" component={MapScreen} />
 
         </Stack.Navigator>
       </NavigationContainer>
@@ -43,7 +44,7 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: Colors.lighter
   },
   engine: {
     position: 'absolute',

@@ -22,15 +22,15 @@ import React, { Component } from 'react';
        constructor() {
         super();
   
-        // eslint-disable-next-line prettier/prettier
         // set default location
         let region = {
-          "latitude": 35.4625901,
-          "longitude": 138.65437569999995,
+          "latitude": -6.135730,
+          "longitude": 39.362122,
           "latitudeDelta": 0,
           "longitudeDelta": 0
         };
   
+        //add to state
         this.state = {
           region
         }

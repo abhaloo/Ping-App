@@ -5,10 +5,10 @@ import React, { Component } from 'react';
       View
     } from 'react-native';
 
-    import MapView from 'react-native-maps';
-    import PropTypes from 'prop-types';
+import MapView from 'react-native-maps';
+import PropTypes from 'prop-types';
 
-    class Map extends Component{
+class Map extends Component{
 
       render() {
 

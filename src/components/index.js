@@ -24,7 +24,7 @@ var {FBLogin} = require('react-native-facebook-login');
 class HomeScreen extends Component {
   
   
-  // set screen tite
+  // set screen title
   static navigationOptions = {
     title: 'locationSharer',
   };
@@ -223,9 +223,13 @@ class HomeScreen extends Component {
     });
 
     //navigating to the map page
-
     const { navigate } = this.props.navigation;
-    navigate('MapScreen', {
+    console.log('Friend name:');
+    console.log(friend.name + '\n\n');
+    console.log('Friend Channel:');
+    console.log(this.friend_channel);
+
+    navigate('Map', {
     name: friend.name,
     friend_channel: this.friend_channel // pass the reference to the friend's channel
     });
