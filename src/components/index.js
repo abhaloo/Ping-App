@@ -120,7 +120,7 @@ class HomeScreen extends Component {
         id: user_id,
         access_token: login_data.credentials.token,
         name: login_data.profile.name,
-        photo: `https://graph.facebook.com/${user_id}/picture?width=100`, // the user's profile picture
+        photo: `https://graph.facebook.com/${user_id}/picture`, // the user's profile picture
       },
     });
 

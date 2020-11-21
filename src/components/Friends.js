@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 class Friends extends Component {
   renderFriends() {
     return this.props.friends.map((friend, index) => {
-      let profile_picture = `https://graph.facebook.com/${friend.id}/picture?width=50`;
+      let profile_picture = `https://graph.facebook.com/${friend.id}/picture`;
       return (
         <TouchableHighlight
           key={index}
