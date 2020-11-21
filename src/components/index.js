@@ -22,8 +22,6 @@ const FBLoginButton = require('./FBLoginButton');
 const {FBLogin} = require('react-native-facebook-login');
 
 class HomeScreen extends Component {
-
-
   // set screen title
   static navigationOptions = {
     title: 'locationSharer',
@@ -230,8 +228,6 @@ class HomeScreen extends Component {
     friend_channel: this.friend_channel, // pass the reference to the friend's channel
     });
   }
-
-
 
   render() {
 
