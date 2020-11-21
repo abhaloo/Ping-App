@@ -15,7 +15,8 @@ import {
 import Pusher from 'pusher-js/react-native';
 import Profile from './Profile'; // component for displaying the user's profile
 import Friends from './Friends'; // component for displaying the user's friends
-import { regionFrom } from './locationHelper'; // helper function for constructing the data needed by React Native Maps
+import { regionFrom } from './locationHelper';
+import MapPage from './MapPage'; // helper function for constructing the data needed by React Native Maps
 
 // for implementing Facebook login
 const FBLoginButton = require('./FBLoginButton');
@@ -57,6 +58,7 @@ class HomeScreen extends Component {
       friends: null, // data for the user's friends
       subscribed_to: null, // the Facbook user ID of the user's friend whose location is currently being viewed
       subscribed_friends_count: 0, // number of friends currently subscribed to the user
+      // render_map: false;
     };
   }
 
@@ -227,6 +229,11 @@ class HomeScreen extends Component {
     name: friend.name,
     friend_channel: this.friend_channel, // pass the reference to the friend's channel
     });
+    //Need to think of a different way of rendering this screen
+    // <MapPage
+    //   name={friend.name}
+    //   friend_channel = {this.friend_channel}
+    // />;
   }
 
   render() {
