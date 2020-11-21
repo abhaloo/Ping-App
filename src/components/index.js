@@ -295,9 +295,9 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingBottom: 30,
-    marginBottom: 80,
-    alignSelf: 'center',
-  },
+    marginBottom: 40,
+    alignSelf: 'center'
+  }
 });
 
 export default HomeScreen;

@@ -9,7 +9,7 @@ import Map from './Map';
 
 import {regionFrom} from './locationHelper';
 
-export default class MapPage extends Component<{}> {
+export default class MapPage extends Component {
   static navigationOptions = ({navigation}) => ({
     title: `${navigation.state.params.name}'s Location`,
   });
