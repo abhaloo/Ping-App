@@ -9,12 +9,12 @@ import React, { Component } from 'react';
 
     import PropTypes from 'prop-types';
 
-    class Friends extends Component<{}> {
+class Friends extends Component {
 
       renderFriends() {
         return this.props.friends.map((friend, index) => {
 
-          let profile_picture = `https://graph.facebook.com/${friend.id}/picture?width=50`;
+          let profile_picture = `https://graph.facebook.com/v9.0/${friend.id}/picture?width=50`;
           return (
             <TouchableHighlight
               key={index}
