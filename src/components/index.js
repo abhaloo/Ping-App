@@ -140,7 +140,7 @@ class HomeScreen extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    
+
       //Open Pusher Channel
       this.pusher = new Pusher('1104307', {
       authEndpoint: 'https://location-sharer.abhaloo.vercel.app/pusher/auth',
@@ -177,13 +177,13 @@ class HomeScreen extends Component {
     // location sharing disabled
     if (!is_location_shared){
       this.pusher.unsubscribe(`private-friend-${user_id}`); // disconnect from their own channel
-      
+
       if(this.watchId){
-        navigator.geolocation.clearWatch(this.watchId); //stop sharing by clearing watch id  
+        navigator.geolocation.clearWatch(this.watchId); //stop sharing by clearing watch id
       }
     } else {
       //location sharing enabled
-      
+
       //Create user channel with pusher
       this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
       console.log('Pusher Channel created:  \n');
@@ -195,7 +195,7 @@ class HomeScreen extends Component {
         console.log('Friend subscribed to channel:  \n');
         console.log(this.friend_data);
 
-        
+
         let friends_count = this.state.subscribed_friends_count + 1;
         this.setState({
           subscribed_friends_count: friends_count,
@@ -241,10 +241,10 @@ class HomeScreen extends Component {
     console.log(friend.name + '\n\n');
     console.log('Friend Channel:');
     console.log(this.friend_channel);
-
+    
     navigate('Map', {
-    name: friend.name,
-    friend_channel: this.friend_channel, // pass the reference to the friend's channel
+      name: friend.name,
+      friend_channel: this.friend_channel, // pass the reference to the friend's channel
     });
     //Need to think of a different way of rendering this screen
     // <MapPage
