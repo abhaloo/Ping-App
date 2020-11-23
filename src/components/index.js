@@ -241,7 +241,7 @@ class HomeScreen extends Component {
     console.log(friend.name + '\n\n');
     console.log('Friend Channel:');
     console.log(this.friend_channel);
-    
+
     navigate('Map', {
       name: friend.name,
       friend_channel: this.friend_channel, // pass the reference to the friend's channel
