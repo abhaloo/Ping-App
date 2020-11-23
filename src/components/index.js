@@ -120,8 +120,8 @@ class HomeScreen extends Component {
         id: user_id,
         access_token: login_data.credentials.token,
         name: login_data.profile.name,
-        photo: `https://graph.facebook.com/${user_id}/picture`, // the user's profile picture
-      },
+        photo: `https://graph.facebook.com/v9.0/${user_id}/picture?width=100` // the user's profile picture
+      }
     });
 
   }
@@ -140,10 +140,10 @@ class HomeScreen extends Component {
   }
 
   UNSAFE_componentWillMount() {
-
-      //Initialize Pusher instance
+    
+      //Open Pusher Channel
       this.pusher = new Pusher('1104307', {
-      authEndpoint: 'c063883b80912c971c1d',
+      authEndpoint: 'https://location-sharer.abhaloo.vercel.app/pusher/auth',
       cluster: 'ap2',
       encrypted: true,
       auth: {
@@ -177,20 +177,31 @@ class HomeScreen extends Component {
     // location sharing disabled
     if (!is_location_shared){
       this.pusher.unsubscribe(`private-friend-${user_id}`); // disconnect from their own channel
-      if (this.watchId){
-        navigator.geolocation.clearWatch(this.watchId); //stop sharing
+      
+      if(this.watchId){
+        navigator.geolocation.clearWatch(this.watchId); //stop sharing by clearing watch id  
       }
     } else {
       //location sharing enabled
+      
+      //Create user channel with pusher
       this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
+      console.log('Pusher Channel created:  \n');
+      console.log(this.user_channel);
+
+      //listen for event on channel
       this.user_channel.bind('client-friend-subscribed', (friend_data) => {
 
+        console.log('Friend subscribed to channel:  \n');
+        console.log(this.friend_data);
+
+        
         let friends_count = this.state.subscribed_friends_count + 1;
         this.setState({
           subscribed_friends_count: friends_count,
         });
 
-        if (friends_count == 1){ // only begin monitoring the location when the first subscriber subscribes
+        if(friends_count >= 1){ // only begin monitoring location when the first friend subscribes
           this.watchId = navigator.geolocation.watchPosition(
             (position) => {
               let region = regionFrom(
@@ -199,6 +210,8 @@ class HomeScreen extends Component {
                 position.coords.accuracy
               );
               this.user_channel.trigger('client-location-changed', region); // push the data to subscribers
+              console.log('Location Data pushed:  \n');
+              console.log(region);
             }
           );
         }
@@ -223,9 +236,13 @@ class HomeScreen extends Component {
     });
 
     //navigating to the map page
-
     const { navigate } = this.props.navigation;
-    navigate('MapScreen', {
+    console.log('Friend name:');
+    console.log(friend.name + '\n\n');
+    console.log('Friend Channel:');
+    console.log(this.friend_channel);
+
+    navigate('Map', {
     name: friend.name,
     friend_channel: this.friend_channel, // pass the reference to the friend's channel
     });
