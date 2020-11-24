@@ -103,7 +103,7 @@ class HomeScreen extends Component<dispatchProps> {
 
   }
 
-  async onLoginNotFound(data){
+  onLoginNotFound(data){
     console.log("User not found. Make sure there is an existing user account");
   }
 
@@ -150,8 +150,8 @@ class HomeScreen extends Component<dispatchProps> {
   UNSAFE_componentWillMount() {
 
       //Open Pusher Channel
-      this.pusher = new Pusher('1104307', {
-      authEndpoint: 'https://location-sharer.abhaloo.vercel.app/pusher/auth',
+      this.pusher = new Pusher('c063883b80912c971c1d', {
+      authEndpoint: 'https://location-sharer.herokuapp.com/pusher/auth',
       cluster: 'ap2',
       encrypted: true,
       auth: {
@@ -161,6 +161,7 @@ class HomeScreen extends Component<dispatchProps> {
       },
     });
 
+
     //used to unsubscribe from a friends channel
     //triggered once the user leaves the map screen to return to home screen
     DeviceEventEmitter.addListener('unsubscribe', (e) => {
@@ -168,6 +169,7 @@ class HomeScreen extends Component<dispatchProps> {
       this.pusher.unsubscribe(`private-friend-${friend_id}`);
     });
   }
+  
 
   //function executes if user presses button to share location
   // If user enables location sharing, we subscribe them to their own channel and share their data using pusher
@@ -192,14 +194,29 @@ class HomeScreen extends Component<dispatchProps> {
     } else {
       //location sharing enabled
 
-      //test location
-      Geolocation.getCurrentPosition(info => console.log('Current Location: \n' + JSON.stringify(info) + '\n'));
       
+       //Create user channel with pusher to broadcast location
+       this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
+       console.log('Pusher Channel created:  \n');
+       console.log(this.user_channel);
 
-      //Create user channel with pusher
-      this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
-      console.log('Pusher Channel created:  \n');
-      console.log(this.user_channel);
+      //get location
+      Geolocation.getCurrentPosition( (location_info) => 
+        {
+          console.log('Current Location: \n' + JSON.stringify(location_info) + '\n');
+          
+          var location = regionFrom(
+          location_info.coords.latitude,
+          location_info.coords.longitude,
+          location_info.coords.accuracy
+          );
+
+          console.log('Location Data to be Pushed:');
+          console.log(JSON.stringify(location));
+
+        }
+        );
+
 
       //listen for event on channel
       this.user_channel.bind('client-friend-subscribed', (friend_data) => {

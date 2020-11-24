@@ -15,6 +15,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Pusher from 'pusher-js/react-native';
 
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
@@ -27,6 +28,8 @@ import { Provider } from 'react-redux';
 const Stack = createStackNavigator();
 
 function App() {
+
+  Pusher.logToConsole = true;
 
   return (
     <Provider store={store}>
