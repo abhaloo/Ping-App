@@ -257,11 +257,6 @@ class HomeScreen extends Component<dispatchProps> {
     this.friend_channel = this.pusher.subscribe(`private-friend-${friend.id}`);
     console.log('Friend Channel:');
     console.log(this.friend_channel);
-
-    let username = this.state.user.name;
-    this.friend_channel.trigger('client-friend-subscribed', {
-      name: username,
-    });
     
     this.friend_channel.bind('pusher:subscription_succeeded', () => {
         console.log("Subscription Successful!\n");
