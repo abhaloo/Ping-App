@@ -18,7 +18,7 @@ Note: This app is still in development so there's a long set up involved.
 -> Basic understanding of React and React-Native.  
 -> __(Important)__ React-Native development environment. Follow React-Native CLI quickstart at https://reactnative.dev/docs/environment-setup   
 -> Android device with running version 5 and above or an emulator with the same  
-      _Note: Make sure adb exists to be able to run the emulator or on physical android device  
+      _Note: Make sure adb exists to be able to run the emulator or on physical android device_  
 -> Facebook Developers Account. You can set one up here : https://developers.facebook.com/  
       Note: You will need to generate a 28 character key-hash to be added as a tester to the project on Facebook Developer Console.  
 -> node package manager (npm) from https://www.npmjs.com/get-npm in order to install all the dependancies required to run the project.  
