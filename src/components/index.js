@@ -13,6 +13,7 @@ import {
 
 // for interacting with Pusher
 import Pusher from 'pusher-js/react-native';
+import Geolocation from '@react-native-community/geolocation';
 import Profile from './Profile'; // component for displaying the user's profile
 import Friends from './Friends'; // component for displaying the user's friends
 import { regionFrom } from './locationHelper';
@@ -191,6 +192,10 @@ class HomeScreen extends Component<dispatchProps> {
     } else {
       //location sharing enabled
 
+      //test location
+      Geolocation.getCurrentPosition(info => console.log('Current Location: \n' + JSON.stringify(info) + '\n'));
+      
+
       //Create user channel with pusher
       this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
       console.log('Pusher Channel created:  \n');
@@ -209,8 +214,10 @@ class HomeScreen extends Component<dispatchProps> {
         });
 
         if(friends_count >= 1){ // only begin monitoring location when the first friend subscribes
-          this.watchId = navigator.geolocation.watchPosition(
+          
+          this.watchId = Geolocation.watchPosition(
             (position) => {
+              console.log('watchID : ' + this.watchId);
               let region = regionFrom(
                 position.coords.latitude,
                 position.coords.longitude,
@@ -231,7 +238,16 @@ class HomeScreen extends Component<dispatchProps> {
   onViewLocation(friend) {
 
     this.friend_channel = this.pusher.subscribe(`private-friend-${friend.id}`);
+    console.log('Friend Channel:');
+    console.log(this.friend_channel);
+
+    let username = this.state.user.name;
+    this.friend_channel.trigger('client-friend-subscribed', {
+      name: username,
+    });
+    
     this.friend_channel.bind('pusher:subscription_succeeded', () => {
+        console.log("Subscription Successful!\n");
         let username = this.state.user.name;
         this.friend_channel.trigger('client-friend-subscribed', {
           name: username,
@@ -247,8 +263,7 @@ class HomeScreen extends Component<dispatchProps> {
 
     // console.log('Friend name:');
     // console.log(friend.name + '\n\n');
-    console.log('Friend Channel:');
-    console.log(this.friend_channel);
+    
     this.props.setFriendChannel(this.friend_channel);
     // console.log("<<< CURRENT PROPS >>> " + JSON.stringify(this.props));
     navigate('Map', {

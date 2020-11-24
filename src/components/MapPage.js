@@ -36,6 +36,7 @@ class MapScreen extends Component<StateProps> {
     const { channel } = this.props.friendChannel;
     if (channel) {
       channel.bind('client-location-changed', (data) => {
+        console.log("data: \n" + data);
         this.setState({
           region: data,
         });
