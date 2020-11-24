@@ -21,17 +21,22 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/components/index';
 import MapScreen from './src/components/MapPage';
+import store from './src/redux/store';
+import { Provider } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 function App() {
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Map" component={MapScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} options={{title: "Location Sharer"}}/>
+          <Stack.Screen name="Map" component={MapScreen} options={({ route }) => ({ title: route.params.friend_name + "'s location" })}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

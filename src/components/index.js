@@ -17,17 +17,20 @@ import Profile from './Profile'; // component for displaying the user's profile
 import Friends from './Friends'; // component for displaying the user's friends
 import { regionFrom } from './locationHelper';
 import MapPage from './MapPage'; // helper function for constructing the data needed by React Native Maps
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {setFriendChannel} from '../redux/reducer';
 
 // for implementing Facebook login
 const FBLoginButton = require('./FBLoginButton');
 const {FBLogin} = require('react-native-facebook-login');
 
-class HomeScreen extends Component {
-  // set screen title
-  static navigationOptions = {
-    title: 'locationSharer',
-  };
+//dispatchProps for the class
+interface dispatchProps {
+  setFriendChannel: any
+}
 
+class HomeScreen extends Component<dispatchProps> {
   constructor() {
     super();
 
@@ -97,6 +100,10 @@ class HomeScreen extends Component {
 
     this.setFriends(token);
 
+  }
+
+  async onLoginNotFound(data){
+    console.log("User not found. Make sure there is an existing user account");
   }
 
   //unsets user data that was set to state earlier
@@ -225,10 +232,10 @@ class HomeScreen extends Component {
 
     this.friend_channel = this.pusher.subscribe(`private-friend-${friend.id}`);
     this.friend_channel.bind('pusher:subscription_succeeded', () => {
-      let username = this.state.user.name;
-      this.friend_channel.trigger('client-friend-subscribed', {
-        name: username,
-      });
+        let username = this.state.user.name;
+        this.friend_channel.trigger('client-friend-subscribed', {
+          name: username,
+        });
     });
 
     this.setState({
@@ -237,20 +244,17 @@ class HomeScreen extends Component {
 
     //navigating to the map page
     const { navigate } = this.props.navigation;
-    console.log('Friend name:');
-    console.log(friend.name + '\n\n');
+
+    // console.log('Friend name:');
+    // console.log(friend.name + '\n\n');
     console.log('Friend Channel:');
     console.log(this.friend_channel);
-
+    this.props.setFriendChannel(this.friend_channel);
+    // console.log("<<< CURRENT PROPS >>> " + JSON.stringify(this.props));
     navigate('Map', {
-      name: friend.name,
-      friend_channel: this.friend_channel, // pass the reference to the friend's channel
+      friend_name: friend.name,
+      // friend_channel: this.friend_channel, // pass the reference to the friend's channel
     });
-    //Need to think of a different way of rendering this screen
-    // <MapPage
-    //   name={friend.name}
-    //   friend_channel = {this.friend_channel}
-    // />;
   }
 
   render() {
@@ -320,4 +324,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+//Mapping action (from reducer.js) to dispatchProps of this class Component
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setFriendChannel: setFriendChannel
+  }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(HomeScreen);
+
+
+//<<< CURRENT PROPS >>> {"navigation":{},"route":{"key":"Home-D0HuP_FGpunNEO-v2raJ5","name":"Home"}}
