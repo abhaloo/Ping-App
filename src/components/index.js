@@ -80,8 +80,8 @@ class HomeScreen extends Component<dispatchProps> {
       .then((response) => response.json())
       .then((responseJson) => {
 
-          console.log('Existing login found.');
-          console.log(data);
+          console.log('Existing User login found.');
+          // console.log(data);
 
           let login_data = {
             profile: {
@@ -103,11 +103,12 @@ class HomeScreen extends Component<dispatchProps> {
 
   }
 
+  //Handler for user accounts that do not exist
   onLoginNotFound(data){
     console.log("User not found. Make sure there is an existing user account");
   }
 
-  //unsets user data that was set to state earlier
+  //Clears the user data that was set to state earlier
   //react-native-facebook-login already destroys session data
   onLogout() {
     this.setState({
@@ -118,7 +119,7 @@ class HomeScreen extends Component<dispatchProps> {
     });
   }
 
-  //formats login data returned from Facebook and sets it to the state
+  //formats login data returned from Facebook and sets it to the current state of the program
   setUser(login_data) {
 
     let user_id = login_data.profile.id;
@@ -134,6 +135,7 @@ class HomeScreen extends Component<dispatchProps> {
 
   }
 
+  //Populate the friends list whose locations can be requested for
   async setFriends(token) {
     await fetch(`https://graph.facebook.com/me/friends?access_token=${token}`)
       .then((response) => response.json())
@@ -169,11 +171,11 @@ class HomeScreen extends Component<dispatchProps> {
       this.pusher.unsubscribe(`private-friend-${friend_id}`);
     });
   }
-  
+
 
   //function executes if user presses button to share location
   // If user enables location sharing, we subscribe them to their own channel and share their data using pusher
-  // If user diables location sharing, unsubscribe them from their channel
+  // If user disables location sharing, unsubscribe them from their channel
   toggleLocationSharing() {
 
     let is_location_shared = !this.state.is_location_shared;
@@ -193,71 +195,65 @@ class HomeScreen extends Component<dispatchProps> {
       }
     } else {
       //location sharing enabled
-
-      
        //Create user channel with pusher to broadcast location
        this.user_channel = this.pusher.subscribe(`private-friend-${user_id}`);
-       console.log('Pusher Channel created:  \n');
-       console.log(this.user_channel);
+       console.log('User Pusher Channel created \n');
+       // console.log(this.user_channel);
 
-      //get location
-      Geolocation.getCurrentPosition( (location_info) => 
-        {
-          console.log('Current Location: \n' + JSON.stringify(location_info) + '\n');
-          
-          var location = regionFrom(
-          location_info.coords.latitude,
-          location_info.coords.longitude,
-          location_info.coords.accuracy
-          );
+      //get location for debugging purposes
+      // Geolocation.getCurrentPosition( (location_info) =>
+      //   {
+      //     console.log('Current Location: \n' + JSON.stringify(location_info) + '\n');
+      //
+      //     var location = regionFrom(
+      //     location_info.coords.latitude,
+      //     location_info.coords.longitude,
+      //     location_info.coords.accuracy
+      //     );
+      //
+      //     console.log('Location Data to be Pushed:');
+      //     console.log(JSON.stringify(location));
+      //
+      //   }
+      //   );
 
-          console.log('Location Data to be Pushed:');
-          console.log(JSON.stringify(location));
-
-        }
-        );
-
-
-      //listen for event on channel
+      //listen for event on pusher channel channel
       this.user_channel.bind('client-friend-subscribed', (friend_data) => {
 
-        console.log('Friend subscribed to channel:  \n');
-        console.log(this.friend_data);
-
+        console.log('A Friend subscribed to channel \n');
+        // console.log(this.friend_data);
 
         let friends_count = this.state.subscribed_friends_count + 1;
         this.setState({
           subscribed_friends_count: friends_count,
         });
 
-        if(friends_count >= 1){ // only begin monitoring location when the first friend subscribes
-          
+        if(friends_count >= 1){ // only begin monitoring location after the first friend subscribes
           this.watchId = Geolocation.watchPosition(
             (position) => {
-              console.log('watchID : ' + this.watchId);
+              // console.log('watchID : ' + this.watchId);
               let region = regionFrom(
                 position.coords.latitude,
                 position.coords.longitude,
                 position.coords.accuracy
               );
               this.user_channel.trigger('client-location-changed', region); // push the data to subscribers
-              console.log('Location Data pushed:  \n');
-              console.log(region);
+              console.log('User Location Data pushed to channels subscribed to current user  \n');
+              // console.log(region);
             }
           );
         }
       });
-
     }
   }
 
-  //subscribe to a friend’s channel so user get updates whenever their friends location changes
+  //subscribe to a friend’s channel so user get updates whenever their location changes
   onViewLocation(friend) {
 
     this.friend_channel = this.pusher.subscribe(`private-friend-${friend.id}`);
-    console.log('Friend Channel:');
-    console.log(this.friend_channel);
-    
+    console.log('Subscribing to Friend Channel \n');
+    // console.log(this.friend_channel);
+
     this.friend_channel.bind('pusher:subscription_succeeded', () => {
         console.log("Subscription Successful!\n");
         let username = this.state.user.name;
@@ -266,6 +262,7 @@ class HomeScreen extends Component<dispatchProps> {
         });
     });
 
+    //Maintain list of friends that are subscribed to by the user
     this.setState({
       subscribed_to: friend.id,
     });
@@ -275,7 +272,7 @@ class HomeScreen extends Component<dispatchProps> {
 
     // console.log('Friend name:');
     // console.log(friend.name + '\n\n');
-    
+
     this.props.setFriendChannel(this.friend_channel);
     // console.log("<<< CURRENT PROPS >>> " + JSON.stringify(this.props));
     navigate('Map', {
@@ -284,6 +281,7 @@ class HomeScreen extends Component<dispatchProps> {
     });
   }
 
+  //Rendering the display on the screen
   render() {
 
     return (
@@ -327,9 +325,7 @@ class HomeScreen extends Component<dispatchProps> {
   }
 }
 
-
-
-// add the styles
+// Adding some styling cues to the current screen
 const styles = StyleSheet.create({
   page_container: {
     ...StyleSheet.absoluteFillObject,

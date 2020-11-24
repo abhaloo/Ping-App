@@ -1,3 +1,6 @@
+//Function used in order to process the information about the latitude and longitude
+//when rendering the location of a user.
+
 export function regionFrom(lat, lon, accuracy) {
   const oneDegreeOfLongitudeInMeters = 111.32 * 1000;
   const circumference = (40075 / 360) * 1000;

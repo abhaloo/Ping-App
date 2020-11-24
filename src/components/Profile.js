@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 
 import PropTypes from 'prop-types';
 
+//Rendering information about the user of the app including the name and profile picture.
 class Profile extends Component {
   render() {
     return (
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// specify the required props
+// specifying the required props for this component.
 Profile.propTypes = {
   profile_picture: PropTypes.string.isRequired,
   profile_name: PropTypes.string.isRequired,

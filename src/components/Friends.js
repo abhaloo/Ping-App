@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 
 import PropTypes from 'prop-types';
 
+//Class component to render the friend list for all the friends on the home screen
 class Friends extends Component {
   renderFriends() {
     return this.props.friends.map((friend, index) => {
@@ -24,7 +25,7 @@ class Friends extends Component {
       );
     });
   }
-
+  //Rendering the friends list
   render() {
     return (
       <View style={styles.friends_container}>
@@ -35,7 +36,6 @@ class Friends extends Component {
   }
 }
 
-// add the styles
 const styles = StyleSheet.create({
   friends_container: {
     flex: 2,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// specify the required props
+// specify the required props that are to be passing to the components where this component is used
 Friends.propTypes = {
   friends: PropTypes.arrayOf(
     PropTypes.shape({

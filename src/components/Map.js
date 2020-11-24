@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 
+//The component where the coordinates of a user are used to display their location
 class Map extends Component {
   render() {
     return (
@@ -23,7 +24,7 @@ class Map extends Component {
   }
 }
 
-// add the styles
+//Formatting the component to fill the whole screen with the map
 const styles = StyleSheet.create({
   map_container: {
     ...StyleSheet.absoluteFillObject,

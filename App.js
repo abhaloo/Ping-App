@@ -27,6 +27,9 @@ import { Provider } from 'react-redux';
 
 const Stack = createStackNavigator();
 
+//The function that creates the routes for the stack navigator to navigate between screens
+//and have a built in back functionality as it is implemented using a stack
+
 function App() {
 
   Pusher.logToConsole = true;
