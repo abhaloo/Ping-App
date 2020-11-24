@@ -10,9 +10,8 @@ Upon toggling the option to share their location, we use the Pusher API to broad
 Users subscribe to a friend's Channel upon clicking on a friends name provided when they log in. Once subscribed they see
 the friends real-time location on a map. 
 
-### To run the app:
-
-Note: This app is still in development so there's a long set up involved. 
+### System Setup
+__Note: This app is still in development so there's a long set up involved.__
 
 ### Pre-requistes
 -> Basic understanding of React and React-Native.  
@@ -30,6 +29,7 @@ Note: This app is still in development so there's a long set up involved.
 4. Connect an android device to the computer or launch an emulator
     When running an android device, make sure to enable developer settings and run in debugging mode in order to access apps that are in development.
 5. Run 'npx react-native run-android' in the project directory
+6. Follow the manual for instructions on how to use the app
 
 ### Referrences
 https://reactnative.dev/docs/ To refer to environment set up and troubleshooting guides.  
