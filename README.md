@@ -32,8 +32,8 @@ Note: This app is still in development so there's a long set up involved.
 5. Run 'npx react-native run-android' in the project directory
 
 ### Referrences
-https://reactnative.dev/docs/ To refer to environment set up and troubleshooting guides.
-https://pusher.com/docs/channels Understanding the mechanism of Pusher Channels and sending information using them.
-https://pusher.com/tutorials/geolocation-sharing-react-native#creating-the-pusher-app Learning code for React-Native.
-https://www.digitalocean.com/community/tutorials/react-react-native-redux Building a global store in app for transferring objects around components.
-https://reactnavigation.org/docs/getting-started To build the stack navigation of switching between screens with "Back" functionality.
+https://reactnative.dev/docs/ To refer to environment set up and troubleshooting guides.  
+https://pusher.com/docs/channels Understanding the mechanism of Pusher Channels and sending information using them.  
+https://pusher.com/tutorials/geolocation-sharing-react-native#creating-the-pusher-app Learning code for React-Native.  
+https://www.digitalocean.com/community/tutorials/react-react-native-redux Building a global store in app for transferring objects around components.  
+https://reactnavigation.org/docs/getting-started To build the stack navigation of switching between screens with "Back" functionality.  
