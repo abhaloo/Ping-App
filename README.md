@@ -3,7 +3,7 @@
 ### CPSC 571, Fall 2020
 
 ### Overview
-This is an app that allows a user to share their location other app users who are their Facebook friends.
+This is an app that allows a user to share their location with other app users who are their Facebook friends.
 
 We use the Facebook API to authenicate user login and access their Facebook friends.
 Upon toggling the option to share their location, we use the Pusher API to broadcast a user's location along a Channel. 
