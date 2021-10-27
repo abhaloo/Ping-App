@@ -1,4 +1,4 @@
-# Location-Sharer
+# Ping
 ### Adeel Bhaloo and Trilok Patel
 ### CPSC 571, Fall 2020
 
@@ -11,7 +11,6 @@ Users subscribe to a friend's Channel upon clicking on their name provided when 
 their friend's real-time location on a map. 
 
 ### System Setup
-__Note: This app is still in development so there's a long set up involved.__
 
 ### Prerequisites
 -> Basic understanding of React and React-Native.  
